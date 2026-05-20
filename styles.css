@@ -14,6 +14,9 @@
 /* ---------- LIGHT (Utilitarian) ---------- */
 :root,
 [data-theme="light"] {
+  --bg-grad-1: rgba(216, 80, 10, 0.15);
+  --bg-grad-2: rgba(216, 80, 10, 0.05);
+  --bg-grad-3: rgba(216, 80, 10, 0.1);
   --bg:            #f7f4f2;
   --text:          #0c0813;
   --text-soft:     rgba(12, 8, 19, 0.62);
@@ -43,6 +46,9 @@
 
 /* ---------- MIST (Dusky Slate) ---------- */
 [data-theme="mist"] {
+  --bg-grad-1: rgba(143, 177, 198, 0.15);
+  --bg-grad-2: rgba(143, 177, 198, 0.05);
+  --bg-grad-3: rgba(143, 177, 198, 0.1);
   --bg:            #3f454c;
   --text:          #e8ebed;
   --text-soft:     rgba(232, 235, 237, 0.68);
@@ -70,8 +76,11 @@
   --wash-4: rgba(40, 50, 64, 0.18);
 }
 
-/* ---------- DARK (Cosmic Midnight) ---------- */
+/* ---------- DARK (Midnight Ink) ---------- */
 [data-theme="dark"] {
+  --bg-grad-1: rgba(201, 168, 76, 0.15);
+  --bg-grad-2: rgba(201, 168, 76, 0.05);
+  --bg-grad-3: rgba(201, 168, 76, 0.1);
   --bg:            #0c0813;
   --text:          #f7f4f2;
   --text-soft:     rgba(247, 244, 242, 0.68);
@@ -103,10 +112,15 @@
 * { box-sizing: border-box; }
 html, body { min-height: 100%; }
 body {
-  margin: 0;
   font-family: var(--font-ui);
   color: var(--text);
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: 
+      radial-gradient(at 0% 0%, var(--bg-grad-1) 0, transparent 50%), 
+      radial-gradient(at 50% 0%, var(--bg-grad-2) 0, transparent 50%), 
+      radial-gradient(at 100% 0%, var(--bg-grad-3) 0, transparent 50%);
+  background-attachment: fixed;
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   letter-spacing: -0.005em;
@@ -144,6 +158,7 @@ body {
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
   background-clip: padding-box;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 .glass::before {
   content: ""; position: absolute; inset: 0;
@@ -734,3 +749,6 @@ body {
   overflow: visible !important;
   padding-bottom: 3rem !important;
 }
+
+
+

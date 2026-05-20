@@ -139,9 +139,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Fridge thawing timeline: 4.5 lbs/day scaling (bypass for Ground & individual Steak/Chop flat baselines)
         let fridgeHours = (weightLbs / 4.5) * 24;
-        if (protein === 'steak_chop') {
+        if (protein === 'beef-steak') {
             fridgeHours = 12;
-        } else if (protein === 'ground_meat') {
+        } else if (protein === 'ground-meat') {
             fridgeHours = 24;
         }
         

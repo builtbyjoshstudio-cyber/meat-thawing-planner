@@ -83,6 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const waterTimeOutput = document.getElementById("water-time-output");
     const safetyWarningContainer = document.getElementById("safety-warning-container");
     const waterCard = document.getElementById("water-card");
+    const seafoodWarningContainer = document.getElementById("seafood-warning-container");
 
     // Unit toggle event listeners
     unitImperialBtn.addEventListener("click", () => {
@@ -126,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
             fridgeTimeOutput.textContent = "--";
             waterTimeOutput.textContent = "--";
             safetyWarningContainer.style.display = "none";
+            if (seafoodWarningContainer) seafoodWarningContainer.style.display = "none";
             return;
         }
 
@@ -135,8 +137,13 @@ document.addEventListener("DOMContentLoaded", () => {
             weightLbs = weightInput * 2.20462;
         }
 
-        // Fridge thawing timeline: 4.5 lbs/day scaling
-        const fridgeHours = (weightLbs / 4.5) * 24;
+        // Fridge thawing timeline: 4.5 lbs/day scaling (bypass for Ground & individual Steak/Chop flat baselines)
+        let fridgeHours = (weightLbs / 4.5) * 24;
+        if (protein === 'steak_chop') {
+            fridgeHours = 12;
+        } else if (protein === 'ground_meat') {
+            fridgeHours = 24;
+        }
         
         // Cold water thawing timeline: 0.5 hours/lb water scaling rules
         const waterHours = weightLbs * 0.5;
@@ -153,6 +160,15 @@ document.addEventListener("DOMContentLoaded", () => {
         } else {
             safetyWarningContainer.style.display = "none";
             waterCard.style.borderColor = "color-mix(in oklab, var(--neg) 30%, transparent)";
+        }
+
+        // Seafood Botulism Safety Warning
+        if (seafoodWarningContainer) {
+            if (protein === 'seafood') {
+                seafoodWarningContainer.style.display = "block";
+            } else {
+                seafoodWarningContainer.style.display = "none";
+            }
         }
 
         // Update pipeline links in real-time

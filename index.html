@@ -144,10 +144,24 @@
           <div class="input-group">
             <span class="input-label">Protein Type</span>
             <select id="protein-type" class="form-input">
-              <option value="turkey">Turkey</option>
-              <option value="chicken">Whole Chicken / Poultry</option>
-              <option value="beef">Beef Roast</option>
-              <option value="pork">Pork Shoulder</option>
+              <optgroup label="Poultry">
+                <option value="turkey">Turkey (Whole or Breast)</option>
+                <option value="chicken">Chicken (Whole or Pieces)</option>
+                <option value="duck_goose">Duck & Goose</option>
+              </optgroup>
+              <optgroup label="Beef, Pork & Lamb">
+                <option value="beef_roast">Beef Roasts (Prime Rib/Brisket)</option>
+                <option value="pork_shoulder_ham">Pork Shoulder & Hams</option>
+                <option value="lamb_leg_rack">Lamb Leg or Rack</option>
+                <option value="steak_chop">Steaks & Chops (Individual)</option>
+              </optgroup>
+              <optgroup label="Ground & Game">
+                <option value="ground_meat">Ground Meats (Beef/Pork/Turkey)</option>
+                <option value="venison_bison">Venison & Bison</option>
+              </optgroup>
+              <optgroup label="Seafood">
+                <option value="seafood">Fish & Seafood</option>
+              </optgroup>
             </select>
           </div>
 
@@ -198,6 +212,10 @@
             <div id="safety-warning-container" style="display: none; margin-top: 16px; font-family: var(--font-ui); font-size: 13px; font-weight: 500; color: var(--neg); line-height: 1.5; padding: 12px; border: 1px dashed color-mix(in oklab, var(--neg) 40%, transparent); border-radius: 8px; background: rgba(178, 58, 26, 0.08);">
                 <!-- Safety Warning Injected Here -->
             </div>
+        </div>
+
+        <div id="seafood-warning-container" style="display: none; grid-column: 1 / -1; font-family: var(--font-ui); font-size: 13px; font-weight: 500; color: var(--neg); line-height: 1.5; padding: 12px; border: 1px dashed color-mix(in oklab, var(--neg) 40%, transparent); border-radius: 8px; background: rgba(178, 58, 26, 0.08);">
+            ⚠️ Critical Seafood Safety: If your seafood is vacuum-sealed, you MUST puncture or remove the packaging completely before thawing in the refrigerator or cold water to eliminate the risk of lethal anaerobic botulism bacteria growth.
         </div>
     </div>
 

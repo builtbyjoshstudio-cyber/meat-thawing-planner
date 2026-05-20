@@ -137,16 +137,44 @@ document.addEventListener("DOMContentLoaded", () => {
             weightLbs = weightInput * 2.20462;
         }
 
-        // Fridge thawing timeline: 4.5 lbs/day scaling (bypass for Ground & individual Steak/Chop flat baselines)
-        let fridgeHours = (weightLbs / 4.5) * 24;
-        if (protein === 'beef-steak') {
-            fridgeHours = 12;
+        // Determine thawing rates based on specific protein characteristics
+        let fridgeRateLbsPerDay = 5.0; // Default: 24 hours per 5 lbs (USDA standard)
+        let waterRateHoursPerLb = 0.5; // Default: 30 mins/lb
+        let isFlatBaseline = false;
+        let fridgeHours = 0;
+
+        if (protein === 'turkey' || protein === 'duck-goose') {
+            fridgeRateLbsPerDay = 4.0; // Whole dense birds / thick poultry (4 lbs/day)
+            waterRateHoursPerLb = 0.6; // 36 mins/lb
+        } else if (protein === 'chicken') {
+            fridgeRateLbsPerDay = 5.0; // 5 lbs/day
+            waterRateHoursPerLb = 0.5; // 30 mins/lb
+        } else if (protein === 'beef-roast' || protein === 'beef-brisket' || protein === 'pork-shoulder' || protein === 'lamb') {
+            fridgeRateLbsPerDay = 5.0; // Large roasts/joints (5 lbs/day)
+            waterRateHoursPerLb = 0.5; // 30 mins/lb
+        } else if (protein === 'game-meat') {
+            fridgeRateLbsPerDay = 5.5; // Lean venison/bison (5.5 lbs/day)
+            waterRateHoursPerLb = 0.45; // 27 mins/lb
+        } else if (protein === 'seafood') {
+            fridgeRateLbsPerDay = 8.0; // Fish & seafood thaws much faster (8 lbs/day)
+            waterRateHoursPerLb = 0.3; // 18 mins/lb
+        } else if (protein === 'beef-steak') {
+            isFlatBaseline = true;
+            fridgeHours = 12; // Flat 12-hour refrigerator window for individual cuts
+            waterRateHoursPerLb = 0.4; // 24 mins/lb
         } else if (protein === 'ground-meat') {
-            fridgeHours = 24;
+            isFlatBaseline = true;
+            fridgeHours = 24; // Flat 24-hour refrigerator window for ground meat packages
+            waterRateHoursPerLb = 0.5; // 30 mins/lb
         }
-        
-        // Cold water thawing timeline: 0.5 hours/lb water scaling rules
-        const waterHours = weightLbs * 0.5;
+
+        // Calculate refrigerator thawing time
+        if (!isFlatBaseline) {
+            fridgeHours = (weightLbs / fridgeRateLbsPerDay) * 24;
+        }
+
+        // Calculate cold water thawing time
+        const waterHours = weightLbs * waterRateHoursPerLb;
 
         // Display results
         fridgeTimeOutput.textContent = formatFridgeTime(fridgeHours);
@@ -214,8 +242,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Calculate on button click
+    // Calculate on button click or input changes
     calculateBtn.addEventListener("click", calculateThawing);
+    proteinType.addEventListener("change", calculateThawing);
+    meatWeight.addEventListener("input", calculateThawing);
 
     // Initial calculation on load
     calculateThawing();
